@@ -28,6 +28,8 @@ pipeline{
     //   }
     // Although here i will be configuring this for my deployments, runs on worker node
        stage("Updating the deployment"){
+          steps{
+           echo "Deployimg on kubernetes"
            steps{
              script{
                 sh "kubectl apply -f /var/lib/jenkins/workspace/CI_CD_Two-Tier-App/k8s/mysql-deployment.yaml"
@@ -35,5 +37,6 @@ pipeline{
              }
            }
        }
+     }
     }
 }
