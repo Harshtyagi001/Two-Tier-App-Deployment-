@@ -1,0 +1,34 @@
+pipeline{
+    agent any
+    stages{
+      stage("Cloning from github"){
+          steps{
+              git url: "https://github.com/Harshtyagi001/Two-Tier-App-Deployment-.git" , branch: "main"
+          }
+      }  
+      stage("Building the image"){
+          steps{
+              sh "docker build . -t flaskapp"
+          }
+      } 
+      stage("Pushing it to docker hub"){
+          steps{
+              withCredentials([usernamePassword(credentialsId: "dockerHub" , usernameVariable:"dockerHubUser" , passwordVariable: "dockerHubPass")]){
+                  sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
+                  sh "docker tag flaskapp ${env.dockerHubUser}/flaskapp:latest"
+                  sh "docker push ${env.dockerHubUser}/flaskapp:latest"
+              }
+          }
+      }
+    // This stage focuses on runnig the application using docker-compose on master node
+    //   stage("Deploy"){
+    //       steps{
+    //              sh "docker-compose down && docker-compose up -d"
+    //       }
+    //   }
+    // Although here i will be configuring this for my deployments, runs on worker node
+       stage("Updating the deployment"){
+           echo "Deployimg on kubernetes"
+       }
+    }
+}
