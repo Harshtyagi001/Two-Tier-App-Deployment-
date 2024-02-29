@@ -28,7 +28,9 @@ pipeline{
     //   }
     // Although here i will be configuring this for my deployments, runs on worker node
        stage("Updating the deployment"){
+          steps{
            echo "Deployimg on kubernetes"
        }
+     }
     }
 }
