@@ -29,10 +29,11 @@ pipeline{
     // Although here i will be configuring this for my deployments, runs on worker node
        stage("Updating the deployment"){
           steps{
-             script{
-                sh "kubectl apply -f /var/lib/jenkins/workspace/CI_CD_Two-Tier-App/k8s/mysql-deployment.yaml"
-                sh "kubectl apply -f /var/lib/jenkins/workspace/CI_CD_Two-Tier-App/k8s/two-tier-flask-app-deployment.yaml"
-             }
+             echo "Checking..."
+            // script{
+              //  sh "kubectl apply -f /var/lib/jenkins/workspace/CI_CD_Two-Tier-App/k8s/mysql-deployment.yaml"
+                //sh "kubectl apply -f /var/lib/jenkins/workspace/CI_CD_Two-Tier-App/k8s/two-tier-flask-app-deployment.yaml"
+             //}
        }
      }
     }
