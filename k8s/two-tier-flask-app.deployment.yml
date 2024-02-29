@@ -1,0 +1,39 @@
+# Deployments handle tasks such as:
+
+# Pulling the updated Docker image.
+# Rolling out the new Pods with the updated image.
+# Ensuring that the desired number of Pods are always available during the update process.
+# Rolling back to the previous version if any issues are detected.
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: two-tier-app
+  labels:
+    app: two-tier-app
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: two-tier-app
+  template:
+    metadata:
+      labels:
+        app: two-tier-app
+    spec:
+      containers:
+        - name: two-tier-app
+          image: harshtyagi8670/flaskapp:latest
+          env:
+            - name: MYSQL_HOST
+              value: "10.98.167.150"          # this is your mysql's service clusture IP, Make sure to change it with yours
+            - name: MYSQL_PASSWORD
+              value: "admin"
+            - name: MYSQL_USER
+              value: "root"
+            - name: MYSQL_DB
+              value: "mydb"
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: Always
