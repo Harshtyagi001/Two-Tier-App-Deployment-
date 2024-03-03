@@ -20,16 +20,17 @@ pipeline{
               }
           }
       }
+
     // This stage focuses on runnig the application using docker-compose on master node
-    //   stage("Deploy"){
-    //       steps{
-    //              sh "docker-compose down && docker-compose up -d"
-    //       }
-    //   }
-    // Although here i will be configuring this for my deployments, runs on worker node
+      stage("Deploy"){
+          steps{
+                 sh "docker-compose down && docker-compose up -d"
+          }
+      }
+    // This stage focuses on updating the deployment on k8s cluster, runs on worker node
        stage("Updating the deployment"){
           steps{
-                sh "kubectl apply -f /var/lib/jenkins/workspace/CI_CD_Two-Tier-App/k8s/two-tier-app-deployment.yml"
+                sh "ansible-playbook /ansible/deployCluster.yml"
        }
      }
     }

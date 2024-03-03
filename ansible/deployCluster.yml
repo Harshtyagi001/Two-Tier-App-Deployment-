@@ -1,0 +1,16 @@
+- name: Redeploy the Two-tier-app deployment manifest files
+  hosts: localhost
+
+  vars:
+    deployment_files:
+      - ../k8s/mysql-deployment.yml
+      - ../k8s/two-tier-flask-app-deployment.yml
+      - ../k8s/two-tier-flask-app-svc.yml
+      - ../k8s/mysql-scv.yml
+      # Add more file paths as needed
+
+  tasks:
+    - name: Apply Deployments using Loop
+      shell: kubectl apply -f "{{ item }}"
+      loop: "{{ deployment_files }}"
+
