@@ -30,7 +30,7 @@ pipeline{
     // This stage focuses on updating the deployment on k8s cluster, runs on worker node
        stage("Updating the deployment"){
           steps{
-                sh "ansible-playbook /ansible/deployCluster.yml"
+                sh "ansible-playbook ./ansible/deployCluster.yml"
        }
      }
     }
